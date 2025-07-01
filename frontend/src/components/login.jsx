@@ -14,6 +14,7 @@ function Login(){
         try{
             await signInWithEmailAndPassword(auth,email,password);
             console.log("User logged in successfully");
+            window.location.href="/profile";
                 toast.success("User logged in sucessfully",{
                     position:"top-center",
                 })
@@ -27,7 +28,7 @@ function Login(){
 
     }
     return(
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} >
             <h3>Login</h3>
 
             <div className="mb-3">
