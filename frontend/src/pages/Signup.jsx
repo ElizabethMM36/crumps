@@ -1,8 +1,8 @@
 import React,{useState} from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth'; 
-import { auth } from './firebase';
+import { auth } from '../../../backend/firebase';
 import { Link } from 'react-router-dom';
-import { db } from './firebase';
+import { db } from '../../../backend/firebase';
 import {setDoc,doc} from "firebase/firestore";
 import { toast } from 'react-toastify';
 function Register() {
