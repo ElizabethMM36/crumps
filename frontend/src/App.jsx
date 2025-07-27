@@ -5,10 +5,18 @@ import Signup from './pages/Signup';
 import CustomerDashboard from './pages/CustomerDashboard';
 import RestaurantDashboard from './pages/RestaurantDashboard';
 import AdminDashboard from './pages/AdminDashboard';
+import { useState } from 'react';
+import Navbar from './components/Navbar';
+import LoginPopup from './components/LoginPopup';
 
 function App() {
+  const [showLogin, setShowLogin] = useState(false);
   return (
+
     <BrowserRouter>
+    {showLogin?<LoginPopup setShowLogin={setShowLogin}/>:<></>}
+    <div className="app">
+    <Navbar setShowLogin={setShowLogin} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
@@ -16,7 +24,7 @@ function App() {
         <Route path="/customer" element={<CustomerDashboard />} />
         <Route path="/restaurant" element={<RestaurantDashboard />} />
         <Route path="/admin" element={<AdminDashboard />} />
-      </Routes>
+      </Routes></div>
     </BrowserRouter>
   );
 }

@@ -1,13 +1,13 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
 import './Home.css';
 import { food_list } from '../assets/assets';
-
+import Header from '../components/Header';
 
 const Home = () => {
   return (
     <>
-      <Navbar />
+      <Header />
+
       <div className="home">
         <h2 className="home-title">Available Food Items</h2>
         <div className="food-grid">
@@ -28,4 +28,3 @@ const Home = () => {
 };
 
 export default Home;
-

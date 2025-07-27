@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import './Navbar.css'
 import {assets} from '../assets/assets'
+import LoginPopup from './LoginPopup'
 
-const Navbar = () => {
+const Navbar = ({setShowLogin}) => {
 
     const [menu, setMenu] = useState("home")
   return (
@@ -23,7 +24,7 @@ const Navbar = () => {
     <div className="dot"></div> {/* just the red circle */}
   </div>
 
-  <button>Sign In</button>
+  <button onClick={()=>setShowLogin(true)}>Sign In</button>
   <button>Admin</button>
 </div>
 

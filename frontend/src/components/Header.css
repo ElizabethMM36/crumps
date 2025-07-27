@@ -1,0 +1,37 @@
+.header {
+  height: 300px;
+  margin: 30px auto;
+  background-size: contain; /* Since it's pixel art, avoid distortion */
+  background-position: center;
+  background-repeat: no-repeat;
+  position: flex;
+  border-radius: 12px;
+  background-color: #111; /* fallback in case image fails */
+}
+
+.header-contents {
+  position: absolute;
+  top: 50%;
+  left: 70%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 16px 24px;
+  border-radius: 8px;
+  color: #18ce2b;
+  font-size: 10 rem;
+  font-weight: bold;
+}
+
+.header-contents h2 {
+  margin: 0;
+  font-size: 50px;
+}
+
+.header-contents p{
+    font-size: 36px;
+}
+.header-contents p{
+    font-size: 36px;
+    text-align: right;
+}
