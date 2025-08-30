@@ -1,0 +1,132 @@
+/* AdminDashboard.css */
+
+/* Page Container */
+.admin-dashboard {
+  min-height: 100vh;
+  background-color: #111; /* dark background */
+  color: #e5e5e5;
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Card */
+.dashboard-card {
+  max-width: 1000px;
+  margin: auto;
+  background: #1a1a1a;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+/* Title */
+.dashboard-title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  color: #4ade80; /* green */
+  margin-bottom: 1.5rem;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.tabs button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  background: #2a2a2a;
+  color: #e5e5e5;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.tabs button.active {
+  background: #4ade80;
+  color: #111;
+  font-weight: 700;
+}
+
+.tabs button:hover {
+  background: #3a3a3a;
+}
+
+/* Table */
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background: #222;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+thead {
+  background: #333;
+  color: #4ade80;
+  text-align: left;
+}
+
+th, td {
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid #333;
+}
+
+tbody tr:hover {
+  background: #2c2c2c;
+}
+
+/* Status Colors */
+.status-approved {
+  color: #4ade80;
+  font-weight: 600;
+}
+
+.status-pending {
+  color: #facc15; /* yellow */
+  font-weight: 600;
+}
+
+.status-rejected {
+  color: #f87171; /* red */
+  font-weight: 600;
+}
+
+/* Buttons inside table */
+.action-btn {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.action-approve {
+  background: #4ade80;
+  color: #111;
+}
+
+.action-approve:hover {
+  background: #22c55e;
+}
+
+.action-reject {
+  background: #f87171;
+  color: #fff;
+}
+
+.action-reject:hover {
+  background: #dc2626;
+}

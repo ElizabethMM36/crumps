@@ -5,8 +5,8 @@ const CustomerDashboard = () => {
   return (
     <>
       
-      <div className="dashboard">
-        <h1>Welcome, Customer!</h1>
+      <div style={{color: 'green'}} className="dashboard">
+        <h1 >Welcome, Customer!</h1>
         {/* Display food items, orders, etc. */}
       </div>
     </>

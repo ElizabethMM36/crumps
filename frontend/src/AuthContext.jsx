@@ -1,37 +1,61 @@
-import {createContext,useEffect,useState} from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth,db } from "./firebase";
-import { doc,getDoc } from "firebase/firestore";
-
-
+import { createContext, useEffect, useState, useContext } from "react";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth, db } from "./firebase";
+import { doc, getDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
-export const AuthProvider =({children}) => {
-    const [currentUser,setCurrentUser] = useState(null);
-    //useEffect is a hook that is used to handle operations with the outside world like fetch data from API
+export const useAuth = () => useContext(AuthContext);
 
-useEffect(() =>{
-const unsub = onAuthStateChanged(auth,async(user)=> {
-    if(user){
-        const userRef=doc(db,"users",user.uid);
+export function AuthProvider({ children }) {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        // Check if user is an admin
+        const adminRef = doc(db, "admins", firebaseUser.uid);
+        const adminSnap = await getDoc(adminRef);
+        const isAdminUser = adminSnap.exists();
+        setIsAdmin(isAdminUser);
+
+        // Get normal user profile (optional)
+        const userRef = doc(db, "users", firebaseUser.uid);
         const userSnap = await getDoc(userRef);
-        setCurrentUser(userSnap.exists() ? userSnap.data() : null);
-    
 
-    }else{
+        setCurrentUser({
+          uid: firebaseUser.uid,
+          email: firebaseUser.email,
+          ...(userSnap.exists() ? userSnap.data() : {}),
+          role: isAdminUser ? "admin" : "user",
+        });
+      } else {
         setCurrentUser(null);
+        setIsAdmin(false);
+      }
+      setLoading(false);
+    });
 
+    return () => unsub();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate("/");
+    } catch (error) {
+      console.error("Logout failed:", error);
     }
-});
-return() => unsub();
-},[]);
+  };
 
-
-return(
-    <AuthContext.Provider value={{currentUser}}>
-        {children}
+  return (
+    <AuthContext.Provider
+      value={{ currentUser, setCurrentUser, handleLogout, isAdmin, loading }}
+    >
+      {children}
     </AuthContext.Provider>
-)
-
-
+  );
 }

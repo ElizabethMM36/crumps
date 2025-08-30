@@ -9,6 +9,10 @@
 .navbar .logo{
     width: 100px;
 }
+.navbar .icon{
+    min-width: 10px;
+    min-height: 10px;
+}
 .navbar-menu{
     display:flex;
     list-style: none;

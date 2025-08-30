@@ -1,6 +1,7 @@
 // src/components/LoginPopup.jsx
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../AuthContext';
 import { auth, db } from '../firebase';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import {
@@ -17,6 +18,9 @@ const LoginPopup = ({ setShowLogin }) => {
   const [name, setName] = useState('');
   const [role, setRole] = useState('customer');
   const navigate = useNavigate();
+  const {currentUser} = useContext(AuthContext);
+
+  // If user is already logged in, redirect to their dashboard
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -169,7 +173,7 @@ const LoginPopup = ({ setShowLogin }) => {
         <button type="submit">{currState}</button>
 
         <p className="login-toggle">
-          {currState === 'Sign In' ? (
+          {currState === 'Sign In'  ?  (
             <>
               Don&apos;t have an account?{' '}
               <span onClick={() => setCurrState('Sign Up')}>Sign Up</span>
@@ -180,6 +184,7 @@ const LoginPopup = ({ setShowLogin }) => {
               <span onClick={() => setCurrState('Sign In')}>Sign In</span>
             </>
           )}
+          
         </p>
       </form>
     </div>
