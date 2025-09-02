@@ -1,0 +1,127 @@
+/* Global page container */
+.dashboard {
+  background: #f7f9fb;
+  min-height: 100vh;
+  padding: 24px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Profile card */
+.profile-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.profile-card h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.profile-card p {
+  color: #6b7280;
+}
+
+/* Search bar */
+.search-bar {
+  display: flex;
+  margin-bottom: 24px;
+}
+
+.search-bar input {
+  flex: 1;
+  border: 1px solid #d1d5db;
+  border-radius: 8px 0 0 8px;
+  padding: 10px 14px;
+  outline: none;
+}
+
+.search-bar input:focus {
+  border-color: #2563eb;
+}
+
+.search-bar button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 0 8px 8px 0;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.search-bar button:hover {
+  background: #1d4ed8;
+}
+
+/* Food items grid */
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.food-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  padding: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.food-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+}
+
+.food-card h4 {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.food-card p {
+  color: #4b5563;
+  margin-bottom: 4px;
+}
+
+.food-card button {
+  margin-top: 8px;
+  background: #16a34a;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.food-card button:hover {
+  background: #15803d;
+}
+
+/* Orders list */
+.orders {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  padding: 20px;
+  list-style: none;
+}
+
+.orders li {
+  padding: 8px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.orders li:last-child {
+  border-bottom: none;
+}
+
+.orders span {
+  font-style: italic;
+  color: #374151;
+}

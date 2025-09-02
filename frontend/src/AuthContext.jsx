@@ -16,22 +16,31 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
-        // Check if user is an admin
-        const adminRef = doc(db, "admins", firebaseUser.uid);
-        const adminSnap = await getDoc(adminRef);
-        const isAdminUser = adminSnap.exists();
-        setIsAdmin(isAdminUser);
+        try {
+          // Check if user is an admin
+          const adminRef = doc(db, "admins", firebaseUser.uid);
+          const adminSnap = await getDoc(adminRef);
+          const isAdminUser = adminSnap.exists();
+          setIsAdmin(isAdminUser);
 
-        // Get normal user profile (optional)
-        const userRef = doc(db, "users", firebaseUser.uid);
-        const userSnap = await getDoc(userRef);
+          // Get user profile from "users" collection
+          const userRef = doc(db, "users", firebaseUser.uid);
+          const userSnap = await getDoc(userRef);
 
-        setCurrentUser({
-          uid: firebaseUser.uid,
-          email: firebaseUser.email,
-          ...(userSnap.exists() ? userSnap.data() : {}),
-          role: isAdminUser ? "admin" : "user",
-        });
+          let userData = {};
+          if (userSnap.exists()) {
+            userData = userSnap.data();
+          }
+
+          setCurrentUser({
+            uid: firebaseUser.uid,
+            email: firebaseUser.email,
+            ...userData, // contains role ("customer", "restaurant", etc.)
+            role: isAdminUser ? "admin" : userData.role || "user", 
+          });
+        } catch (err) {
+          console.error("Error fetching user:", err);
+        }
       } else {
         setCurrentUser(null);
         setIsAdmin(false);

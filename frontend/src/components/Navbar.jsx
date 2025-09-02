@@ -22,22 +22,27 @@ const Navbar = ({ setShowLogin }) => {
   };
 
   const handleDashboardRedirect = () => {
-    if (!currentUser) return; // if no user, do nothing
+  if (!currentUser) return;
 
-    switch (currentUser.role) {
-      case 'customer':
-        navigate('/customer');
-        break;
-      case 'restaurant':
+  switch (currentUser.role) {
+    case 'customer':
+      navigate('/customer');
+      break;
+    case 'restaurant':
+      if (currentUser.status === 'approved') {
         navigate('/restaurant');
-        break;
-      case 'admin':
-        navigate('/admin');
-        break;
-      default:
-        navigate('/');
-    }
-  };
+      } else {
+        // Show pending message instead of navigating
+        alert("Your restaurant account is still pending admin approval.");
+      }
+      break;
+    case 'admin':
+      navigate('/admin');
+      break;
+    default:
+      navigate('/');
+  }
+};
 
   return (
     <div className="navbar">
