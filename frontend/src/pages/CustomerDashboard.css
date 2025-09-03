@@ -1,6 +1,6 @@
 /* Global page container */
 .dashboard {
-  background: #f7f9fb;
+  background: #0e0e0f;
   min-height: 100vh;
   padding: 24px;
   font-family: 'Inter', sans-serif;
@@ -8,7 +8,7 @@
 
 /* Profile card */
 .profile-card {
-  background: #fff;
+  background: #121111;
   border-radius: 16px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.06);
   padding: 20px;
@@ -19,6 +19,7 @@
   font-size: 1.25rem;
   font-weight: 700;
   margin-bottom: 4px;
+  color: #f3f4f6;
 }
 
 .profile-card p {
@@ -29,6 +30,7 @@
 .search-bar {
   display: flex;
   margin-bottom: 24px;
+  color: #f3f4f6;
 }
 
 .search-bar input {
@@ -37,15 +39,16 @@
   border-radius: 8px 0 0 8px;
   padding: 10px 14px;
   outline: none;
+  color: hsl(0, 100%, 99%);
 }
 
 .search-bar input:focus {
-  border-color: #2563eb;
+  border-color: #28a819;
 }
 
 .search-bar button {
-  background: #2563eb;
-  color: white;
+  background: #0fa530;
+  color: rgb(16, 16, 16);
   border: none;
   padding: 10px 16px;
   border-radius: 0 8px 8px 0;
@@ -54,7 +57,7 @@
 }
 
 .search-bar button:hover {
-  background: #1d4ed8;
+  background: #3d8844;
 }
 
 /* Food items grid */
@@ -66,7 +69,7 @@
 }
 
 .food-card {
-  background: white;
+  background: rgb(17, 16, 16);
   border-radius: 16px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.05);
   padding: 16px;
@@ -105,16 +108,31 @@
 
 /* Orders list */
 .orders {
-  background: white;
+  background: rgb(28, 27, 27);
   border-radius: 16px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.06);
   padding: 20px;
   list-style: none;
+  max-width: 600px;
+  margin: 0 auto;
+  color: #f3f4f6;
 }
-
+.text-lg font- mb-2{
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #f3f4f6;
+}
 .orders li {
   padding: 8px 0;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid #1e1e20;
+  color: #d1d5db;
+}
+.text-lg font-semibold mb-2{
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #f3f4f6;
 }
 
 .orders li:last-child {

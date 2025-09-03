@@ -1,9 +1,9 @@
 import React from 'react'
 import {db,auth} from '../firebase'
-import { collection, getDocs, updateDoc,  where, deleteDoc ,doc,query,orderBy} from 'firebase/firestore'
+import { collection, getDocs, updateDoc, where, deleteDoc, doc, query, orderBy, getDoc, addDoc, serverTimestamp } from "firebase/firestore";
+import { onSnapshot } from "firebase/firestore";
 import { useState, useEffect } from 'react'
-import { onSnapshot } from 'firebase/firestore'
-import { addDoc } from 'firebase/firestore'
+
 import './RestaurantDashboard.css'
 
 const RestaurantDashboard = () => {
@@ -24,6 +24,16 @@ const RestaurantDashboard = () => {
     });
     return () => unsubscribe();
   },[user]);
+  useEffect(() => {
+    if(!user) return;
+    const q = query(collection(db,"orders"),where("restaurantId","==",user.uid),orderBy("createdAt","desc"));
+    const unsubscribe = onSnapshot(q,(snapshot) => {
+      setOrders(snapshot.docs.map((doc) => ({id:doc.id,...doc.data()})));
+    });
+    return () => unsubscribe();
+  
+    },[user]);
+  
   const handleUploadFood = async(e) => {
     e.preventDefault();
     if(!foodName || !location || !availableUntil || !price ){
@@ -31,20 +41,28 @@ const RestaurantDashboard = () => {
       return;
     }
     try{
-  
+     const userRef = doc(db, "users", user.uid);
+     const userSnap = await getDoc(userRef);
+
+     let restaurantName = "Unknown";
+     if (userSnap.exists()){
+      restaurantName =  userSnap.data().name ;
+     }
 
       await addDoc(collection(db,"foodItems"),{
         restaurantId: user.uid,
+        restaurantName,
         foodName,
-        location,
+        location:location.toLowerCase(),
         availableUntil,
         price: parseFloat(price), 
         
-        createdAt: new Date()
+        createdAt: serverTimestamp()
       });
       setFoodName("");
       setLocation("");
       setAvailableUntil("");
+
       setPrice("");
      
       alert("Food Item Uploaded Successfully");
@@ -101,6 +119,8 @@ const RestaurantDashboard = () => {
           >
             <p><strong>Customer ID:</strong> {order.customerId}</p>
             <p><strong>Food:</strong> {order.foodName}</p>
+            <p><strong>Status:</strong> {order.status}</p>
+          
             <p><strong>Ordered At:</strong> {new Date(order.createdAt?.seconds * 1000).toLocaleString()}</p>
           </li>
         ))}

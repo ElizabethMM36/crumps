@@ -19,11 +19,16 @@
 }
 
 .food-card {
-  background-color: #0d0d0d;
+  background-color: #0c0c0c;
   border-radius: 10px;
   padding: 15px;
   text-align: center;
-  box-shadow: 0 0 10px rgba(65, 221, 65, 0.2);
+  box-shadow: 0 0 10px rgba(118, 120, 118, 0.2);
+}
+.food-card h3 {
+  margin: 10px 0;
+  font-size: 20px;
+  color: #e4e4e4;
 }
 
 .food-card img {

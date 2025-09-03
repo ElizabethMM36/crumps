@@ -11,6 +11,7 @@ import {
 } from "firebase/firestore";
 import "./CustomerDashboard.css";
 import { onSnapshot } from "firebase/firestore";
+
 export default function CustomerDashboard() {
   const { currentUser } = useContext(AuthContext);
   const [search, setSearch] = useState("");
@@ -34,10 +35,10 @@ export default function CustomerDashboard() {
   const handleSearch = async () => {
     if (!search) return;
     const q = query(
-      collection(db, "foodItems"),
-     where("location", "==", search.trim().toLowerCase())
-
-    );
+    collection(db, "foodItems"),
+    orderBy("location"),
+    where("location", ">=", searchText),
+    where("location", "<=", searchText + "\uf8ff"));
     {foodItems.length === 0 && search && (
   <p className="text-gray-500">No food items found in {search}.</p>
 )}
@@ -51,14 +52,15 @@ export default function CustomerDashboard() {
     if (!currentUser) return;
     await addDoc(collection(db, "orders"), {
       customerId: currentUser.uid,
-      customerName: currentUser.displayName || "Anonymous",
+      customerName: currentUser.name || "Anonymous",
       foodId: item.id,
-      foodName: item.name,
+      foodName: item.foodName,
       restaurantId: item.restaurantId,
+      restaurantName: item.restaurantName,
       status: "pending",
-      createdAt: serverTimestamp(),
+      orderedAt: serverTimestamp(),
     });
-    alert(`Order placed for ${item.name}`);
+    alert(`Order placed for ${item.foodName}`);
   };
 
   return (
@@ -91,7 +93,7 @@ export default function CustomerDashboard() {
       <div className="food-grid">
         {foodItems.map((item) => (
           <div key={item.id} className="food-card">
-            <h4 className="font-bold">{item.name}</h4>
+            <h4 className="font-bold">{item.foodName}</h4>
             <p className="text-gray-500">Location: {item.location}</p>
             <p className="text-gray-700">Price: ${item.price}</p>
             <button

@@ -1,9 +1,25 @@
 import React from 'react';
 import './Home.css';
-import { food_list } from '../assets/assets';
+import { useEffect, useState } from 'react';
+import {db} from '../firebase';
+import {orderBy} from 'firebase/firestore';
+
+import {where,collection,getDocs,query} from 'firebase/firestore';
 import Header from '../components/Header';
 
 const Home = () => {
+  const [foodItems ,setFoodItems] = useState ([]);
+
+  useEffect(() => {
+    const fetchFoodItems = async () => {
+      const q = query(collection(db, "foodItems"),orderBy("createdAt", "desc"));
+      const querySnapshot = await getDocs(q);
+      setFoodItems(querySnapshot.docs.map(doc =>({id: doc.id, ...doc.data()})));
+
+    };
+    fetchFoodItems();
+
+  },[])
   return (
     <>
       <Header />
@@ -11,13 +27,13 @@ const Home = () => {
       <div className="home">
         <h2 className="home-title">Available Food Items</h2>
         <div className="food-grid">
-          {food_list.map((food) => (
-            <div className="food-card" key={food.id}>
-              <img src={food.image} alt={food.name} />
-              <h3>{food.name}</h3>
-              <p>₹{food.price}</p>
-              <p>{food.location}</p>
-              <small>By: {food.restaurantName}</small>
+          {foodItems.map((item) => (
+            <div className="food-card" key={item.id}>
+    
+              <h3>{item.foodName}</h3>
+              <p>₹{item.price}</p>
+              <p>{item.location}</p>
+              <small>By: {item.restaurantName}</small>
               <button>Order Now</button>
             </div>
           ))}
