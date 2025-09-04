@@ -19,7 +19,7 @@ const LoginPopup = ({ setShowLogin }) => {
   const [role, setRole] = useState('customer');
   const navigate = useNavigate();
   const {currentUser} = useContext(AuthContext);
-
+ 
   // If user is already logged in, redirect to their dashboard
 
   const handleSignup = async (e) => {

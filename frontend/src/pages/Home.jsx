@@ -1,14 +1,18 @@
 import React from 'react';
 import './Home.css';
 import { useEffect, useState } from 'react';
-import {db} from '../firebase';
+import {db,auth} from '../firebase';
 import {orderBy} from 'firebase/firestore';
+import {useNavigate} from 'react-router-dom';
+
 
 import {where,collection,getDocs,query} from 'firebase/firestore';
 import Header from '../components/Header';
 
-const Home = () => {
+const Home = ({setShowLogin}) => {
   const [foodItems ,setFoodItems] = useState ([]);
+  
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchFoodItems = async () => {
@@ -20,6 +24,15 @@ const Home = () => {
     fetchFoodItems();
 
   },[])
+  const handleOrderNow = (item) => {
+    const user = auth.currentUser;
+    if(!user){
+      setShowLogin("user");
+    }
+    else{
+      navigate('/customer');
+    }
+  }
   return (
     <>
       <Header />
@@ -34,11 +47,12 @@ const Home = () => {
               <p>₹{item.price}</p>
               <p>{item.location}</p>
               <small>By: {item.restaurantName}</small>
-              <button>Order Now</button>
+              <button onClick={handleOrderNow}>Order Now</button>
             </div>
           ))}
         </div>
       </div>
+      
     </>
   );
 };

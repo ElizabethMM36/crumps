@@ -26,14 +26,21 @@ const RestaurantDashboard = () => {
   },[user]);
   useEffect(() => {
     if(!user) return;
-    const q = query(collection(db,"orders"),where("restaurantId","==",user.uid),orderBy("createdAt","desc"));
+    const q = query(collection(db,"orders"),where("restaurantId","==",user.uid),orderBy("orderedAt","desc"));
     const unsubscribe = onSnapshot(q,(snapshot) => {
       setOrders(snapshot.docs.map((doc) => ({id:doc.id,...doc.data()})));
     });
     return () => unsubscribe();
-  
     },[user]);
-  
+   
+    const acceptOrder = async(id) => {
+    await updateDoc(doc(db,"orders",id),{status:"accepted"});
+    
+  }
+  const rejectOrder = async(id) => {
+    await updateDoc(doc(db,"orders",id),{status:"rejected"});
+    
+  }
   const handleUploadFood = async(e) => {
     e.preventDefault();
     if(!foodName || !location || !availableUntil || !price ){
@@ -120,7 +127,8 @@ const RestaurantDashboard = () => {
             <p><strong>Customer ID:</strong> {order.customerId}</p>
             <p><strong>Food:</strong> {order.foodName}</p>
             <p><strong>Status:</strong> {order.status}</p>
-          
+          <button onClick={() => acceptOrder(order.id)} className= "accept-button">Accept</button>
+          <button onClick={() => rejectOrder(order.id)} className= "reject-button">Reject</button>
             <p><strong>Ordered At:</strong> {new Date(order.createdAt?.seconds * 1000).toLocaleString()}</p>
           </li>
         ))}

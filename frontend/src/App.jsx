@@ -24,7 +24,7 @@ function App() {
       <div className="app">
         <Navbar setShowLogin={setShowLogin} />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home setShowLogin={setShowLogin}/>} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route element={<ProtectedRoute allowedRoles={['customer']} />}><Route path="/customer" element={<CustomerDashboard />} />

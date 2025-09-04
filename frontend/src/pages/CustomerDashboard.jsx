@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthContext";
 import { db } from "../firebase";
+
 import {
   collection,
   query,
@@ -8,9 +9,14 @@ import {
   getDocs,
   addDoc,
   serverTimestamp,
+  
+  onSnapshot,    
+  orderBy
 } from "firebase/firestore";
+
+
 import "./CustomerDashboard.css";
-import { onSnapshot } from "firebase/firestore";
+
 
 export default function CustomerDashboard() {
   const { currentUser } = useContext(AuthContext);
@@ -37,8 +43,10 @@ export default function CustomerDashboard() {
     const q = query(
     collection(db, "foodItems"),
     orderBy("location"),
-    where("location", ">=", searchText),
-    where("location", "<=", searchText + "\uf8ff"));
+    where("foodName", ">=", search),
+    where("foodName", "<=", search + "\uf8ff"),
+    where("location", ">=", search),
+    where("location", "<=", search + "\uf8ff"));
     {foodItems.length === 0 && search && (
   <p className="text-gray-500">No food items found in {search}.</p>
 )}
@@ -62,6 +70,7 @@ export default function CustomerDashboard() {
     });
     alert(`Order placed for ${item.foodName}`);
   };
+  
 
   return (
     <div className="dashboard">
@@ -89,7 +98,10 @@ export default function CustomerDashboard() {
       </div>
 
       {/* Food Items */}
-      <h3 className="text-lg font- mb-2">Available Food</h3>
+      <div className="food">
+        <h3 className="text-lg font- mb-2">Available Food</h3>
+      </div>
+      
       <div className="food-grid">
         {foodItems.map((item) => (
           <div key={item.id} className="food-card">
@@ -107,7 +119,9 @@ export default function CustomerDashboard() {
       </div>
 
       {/* Previous Orders */}
+      <div className="orders-section">
       <h3 className="text-lg font-semibold mb-2">My Orders</h3>
+      </div>
       <ul className="orders">
         {orders.map((order) => (
           <li key={order.id} className="border-b py-2">
