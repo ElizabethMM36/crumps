@@ -6,12 +6,13 @@ import {orderBy} from 'firebase/firestore';
 import {useNavigate} from 'react-router-dom';
 
 
+
 import {where,collection,getDocs,query} from 'firebase/firestore';
 import Header from '../components/Header';
 
 const Home = ({setShowLogin}) => {
   const [foodItems ,setFoodItems] = useState ([]);
-  
+ 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,6 +25,8 @@ const Home = ({setShowLogin}) => {
     fetchFoodItems();
 
   },[])
+
+
   const handleOrderNow = (item) => {
     const user = auth.currentUser;
     if(!user){
